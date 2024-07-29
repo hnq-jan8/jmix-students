@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://teacherDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="teacherDc"
+                  class="com.school.secondjmix.entity.Teacher">
+            <fetchPlan extends="_base">
+                <property name="account" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="teacherDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="teacherDc">
+            <textField id="nameField" property="name"/>
+            <datePicker id="dateOfBirthField" property="dateOfBirth"/>
+            <textField id="phoneNumberField" property="phoneNumber"/>
+            <textField id="addressField" property="address"/>
+            <entityPicker id="accountField" property="account">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

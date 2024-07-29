@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://clazzDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="clazzDc"
+                  class="com.school.secondjmix.entity.Clazz">
+            <fetchPlan extends="_base"/>
+            <loader id="clazzDl"/>
+        </instance>
+        <collection id="schoolsDc" class="com.school.secondjmix.entity.School">
+            <loader id="schoolsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from School e]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
+        <collection id="studentsDc" class="com.school.secondjmix.entity.Student">
+            <fetchPlan extends="_base">
+                <property name="clazz" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="studentsDl" readOnly="true">
+                <query>
+                    <![CDATA[select s from Student s where s.clazz = :class]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="clazzDc">
+            <textField id="nameField" property="name"/>
+            <entityPicker id="teacherField" property="teacher">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <datePicker id="startAtField" property="startAt"/>
+            <datePicker id="endAtField" property="endAt"/>
+            <entityPicker id="schoolField" property="school">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+        <dataGrid id="studentsDataGrid" dataContainer="studentsDc" width="100%">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+                <column property="dateOfBirth"/>
+                <column property="phoneNumber"/>
+                <column property="address"/>
+                <column property="citizenId"/>
+            </columns>
+        </dataGrid>
+    </layout>
+</view>

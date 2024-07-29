@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://schoolDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="schoolDc"
+                  class="com.school.secondjmix.entity.School">
+            <fetchPlan extends="_base">
+                <property name="manager" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="schoolDl"/>
+        </instance>
+        <collection id="usersDc" class="com.school.secondjmix.entity.User">
+            <loader id="usersDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from User e]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="schoolDc">
+            <textField id="codeField" property="code"/>
+            <textField id="nameField" property="name"/>
+            <entityComboBox id="managerField" property="manager" itemsContainer="usersDc"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

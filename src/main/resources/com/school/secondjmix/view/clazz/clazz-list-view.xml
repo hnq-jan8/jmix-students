@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://clazzListView.title"
+      focusComponent="clazzesDataGrid">
+    <data>
+        <collection id="clazzesDc"
+                    class="com.school.secondjmix.entity.Clazz">
+            <fetchPlan extends="_base">
+                <property name="teacher" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="clazzesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Clazz e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="clazzesDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createBtn" action="clazzesDataGrid.create"/>
+            <button id="editBtn" action="clazzesDataGrid.edit"/>
+            <button id="removeBtn" action="clazzesDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="clazzesDl"/>
+        </hbox>
+        <dataGrid id="clazzesDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="clazzesDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="name"/>
+                <column property="teacher"/>
+                <column property="startAt"/>
+                <column property="endAt"/>
+                <column property="school"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectBtn" action="selectAction"/>
+            <button id="discardBtn" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>
