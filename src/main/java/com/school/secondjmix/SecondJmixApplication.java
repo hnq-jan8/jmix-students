@@ -21,7 +21,7 @@ import org.springframework.core.env.Environment;
 import javax.sql.DataSource;
 
 @Push
-@Theme(value = "second-jmix")
+@Theme(value = "second-jmix", variant = "dark")
 @PWA(name = "Second Jmix", shortName = "Second Jmix")
 @SpringBootApplication
 @EnableJmixDataRepositories

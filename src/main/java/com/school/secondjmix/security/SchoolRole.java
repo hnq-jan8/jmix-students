@@ -17,7 +17,7 @@ public interface SchoolRole {
     String CODE = "school";
 
     @MenuPolicy(menuIds = {"Clazz.list", "Student.list", "Teacher.list"})
-    @ViewPolicy(viewIds = {"Clazz.list", "Student.list", "Teacher.list", "Student.detail", "Teacher.detail", "School.list", "Clazz.detail", "School.detail"})
+    @ViewPolicy(viewIds = {"Clazz.list", "Student.list", "Teacher.list", "Student.detail", "Teacher.detail", "Clazz.detail", "School.detail"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Student.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
@@ -28,8 +28,8 @@ public interface SchoolRole {
     @EntityPolicy(entityClass = Teacher.class, actions = EntityPolicyAction.ALL)
     void teacher();
 
-    @EntityAttributePolicy(entityClass = School.class, attributes = {"version", "code", "name"}, action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = School.class, actions = EntityPolicyAction.READ)
+    @EntityAttributePolicy(entityClass = School.class, attributes = {"version", "code", "name"}, action = EntityAttributePolicyAction.VIEW)
     void school();
 
     @EntityAttributePolicy(entityClass = Clazz.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
