@@ -37,6 +37,9 @@
             </section>
         </drawerLayout>
         <initialLayout>
+            <div>
+                <h1 text="msg://com.school.secondjmix.view.base/baseView.title"/>
+            </div>
         </initialLayout>
     </appLayout>
 </mainView>

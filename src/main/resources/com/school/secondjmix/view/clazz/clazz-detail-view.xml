@@ -19,9 +19,6 @@
             <fetchPlan extends="_base"/>
         </collection>
         <collection id="studentsDc" class="com.school.secondjmix.entity.Student">
-            <fetchPlan extends="_base">
-                <property name="clazz" fetchPlan="_instance_name"/>
-            </fetchPlan>
             <loader id="studentsDl" readOnly="true">
                 <query>
                     <![CDATA[select s from Student s where s.clazz = :class]]>
