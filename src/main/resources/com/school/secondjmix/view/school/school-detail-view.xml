@@ -30,7 +30,11 @@
         <formLayout id="form" dataContainer="schoolDc">
             <textField id="codeField" property="code"/>
             <textField id="nameField" property="name"/>
-            <entityComboBox id="managerField" property="manager" itemsContainer="usersDc"/>
+            <entityComboBox id="managerField" property="manager" itemsContainer="usersDc">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                </actions>
+            </entityComboBox>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>

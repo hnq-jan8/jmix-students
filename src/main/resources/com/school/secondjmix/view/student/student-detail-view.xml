@@ -15,6 +15,14 @@
             </fetchPlan>
             <loader id="studentDl"/>
         </instance>
+        <collection id="clazzesDc" class="com.school.secondjmix.entity.Clazz">
+            <loader id="clazzesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Clazz e order by e.school.name asc, e.name asc]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -30,12 +38,11 @@
             <textField id="phoneNumberField" property="phoneNumber"/>
             <textField id="addressField" property="address"/>
             <textField id="citizenIdField" property="citizenId"/>
-            <entityPicker id="clazzField" property="clazz">
+            <entityComboBox id="clazzField" property="clazz" itemsContainer="clazzesDc">
                 <actions>
                     <action id="entityLookup" type="entity_lookup"/>
-                    <action id="entityClear" type="entity_clear"/>
                 </actions>
-            </entityPicker>
+            </entityComboBox>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>

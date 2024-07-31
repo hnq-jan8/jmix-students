@@ -6,6 +6,7 @@ import com.school.secondjmix.entity.Student;
 import com.school.secondjmix.repository.SchoolRepository;
 import com.school.secondjmix.view.main.MainView;
 import com.vaadin.flow.router.Route;
+import io.jmix.flowui.component.combobox.EntityComboBox;
 import io.jmix.flowui.model.CollectionLoader;
 import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.EditedEntityContainer;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+
 @Route(value = "classes/:id", layout = MainView.class)
 @ViewController("Clazz.detail")
 @ViewDescriptor("clazz-detail-view.xml")
@@ -30,18 +32,43 @@ public class ClazzDetailView extends StandardDetailView<Clazz> {
     @ViewComponent
     private CollectionLoader<Student> studentsDl;
 
+    @ViewComponent
+    private EntityComboBox<School> schoolField;
+
+    /**
+     * The only school in the system, null if there are several schools.
+     *
+     * @see #singleSchoolFieldHandle()
+     */
+    private School theOnlySchool = null;
+
+    @Subscribe
+    public void onInit(final InitEvent event) {
+        singleSchoolFieldHandle();
+    }
 
     @Subscribe
     public void onInitEntity(final InitEntityEvent<Clazz> event) {
-        List<School> schools = (List<School>) schoolRepository.findAll();
-        if (schools.size() != 1) return;
-
-        event.getEntity().setSchool(schools.get(0));
+        if (theOnlySchool != null) {
+            event.getEntity().setSchool(theOnlySchool);
+        }
     }
 
     @Subscribe(id = "clazzDc", target = Target.DATA_CONTAINER)
     public void onClazzDcItemChange(final InstanceContainer.ItemChangeEvent<Clazz> event) {
         studentsDl.setParameter("class", event.getItem());
         studentsDl.load();
+    }
+
+    /**
+     * If there is only one school in the system, the school field should be read-only
+     * with {@link #theOnlySchool} selected.
+     */
+    private void singleSchoolFieldHandle() {
+        List<School> schools = (List<School>) schoolRepository.findAll();
+        boolean isSingleSchool = schools.size() == 1;
+
+        theOnlySchool = isSingleSchool ? schools.getFirst() : null;
+        schoolField.setReadOnly(isSingleSchool);
     }
 }

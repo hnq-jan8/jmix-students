@@ -10,6 +10,14 @@
             </fetchPlan>
             <loader id="teacherDl"/>
         </instance>
+        <collection id="usersDc" class="com.school.secondjmix.entity.User">
+            <loader id="usersDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from User e]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -24,12 +32,11 @@
             <datePicker id="dateOfBirthField" property="dateOfBirth"/>
             <textField id="phoneNumberField" property="phoneNumber"/>
             <textField id="addressField" property="address"/>
-            <entityPicker id="accountField" property="account">
+            <entityComboBox id="accountField" itemsContainer="usersDc" property="account">
                 <actions>
                     <action id="entityLookup" type="entity_lookup"/>
-                    <action id="entityClear" type="entity_clear"/>
                 </actions>
-            </entityPicker>
+            </entityComboBox>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
