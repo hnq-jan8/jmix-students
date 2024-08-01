@@ -20,11 +20,22 @@
                 </query>
             </loader>
         </collection>
+        <collection id="clazzesDc" class="com.school.secondjmix.entity.Clazz">
+            <loader id="clazzesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Clazz e]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
+        <instance id="studentSearchDc" class="com.school.secondjmix.entity.StudentSearch">
+            <fetchPlan/>
+            <loader id="studentSearchDl"/>
+        </instance>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
         <urlQueryParameters>
-            <genericFilter component="genericFilter"/>
             <pagination component="pagination"/>
         </urlQueryParameters>
     </facets>
@@ -33,10 +44,34 @@
         <action id="discardAction" type="lookup_discard"/>
     </actions>
     <layout>
-        <genericFilter id="genericFilter"
-                       dataLoader="studentsDl">
-            <properties include=".*"/>
-        </genericFilter>
+        <details summaryText="Search">
+            <formLayout id="searchForm" dataContainer="studentSearchDc">
+                <responsiveSteps>
+                    <responsiveStep minWidth="0" columns="1"/>
+                    <responsiveStep minWidth="25em" columns="2"/>
+                    <responsiveStep minWidth="40em" columns="3"/>
+                </responsiveSteps>
+                <textField id="nameField" property="name" clearButtonVisible="true"/>
+                <datePicker id="dateOfBirthField" property="dateOfBirth" clearButtonVisible="true"/>
+                <textField id="phoneNumberField" property="phoneNumber" allowedCharPattern="\d" maxLength="10"
+                           pattern="^\d{10}$"/>
+                <textField id="addressField" property="address" clearButtonVisible="true"/>
+                <textField id="citizenIdField" property="citizenId" allowedCharPattern="\d" maxLength="12"
+                           pattern="^\d{12}$"/>
+                <entityComboBox id="clazzField" property="clazz" itemsContainer="clazzesDc">
+                    <actions>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityComboBox>
+                <formItem colspan="6">
+                    <hbox id="searchButtons" justifyContent="END">
+                        <button id="clearButton" text="Clear" icon="lumo:cross"/>
+                        <button id="searchButton" text="Search" icon="lumo:search"/>
+                    </hbox>
+                </formItem>
+                <div height="12px"/>
+            </formLayout>
+        </details>
         <hbox id="buttonsPanel" classNames="buttons-panel">
             <button id="createBtn" action="studentsDataGrid.create"/>
             <button id="editBtn" action="studentsDataGrid.edit"/>

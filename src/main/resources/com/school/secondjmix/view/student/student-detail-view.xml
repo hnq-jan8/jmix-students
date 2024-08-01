@@ -35,10 +35,10 @@
         <formLayout id="form" dataContainer="studentDc">
             <textField id="nameField" property="name"/>
             <datePicker id="dateOfBirthField" property="dateOfBirth"/>
-            <textField id="phoneNumberField" property="phoneNumber" allowedCharPattern="^\d$" maxLength="10"
+            <textField id="phoneNumberField" property="phoneNumber" allowedCharPattern="\d" maxLength="10"
                        pattern="^\d{10}$"/>
             <textField id="addressField" property="address"/>
-            <textField id="citizenIdField" property="citizenId" allowedCharPattern="^\d$" maxLength="12"
+            <textField id="citizenIdField" property="citizenId" allowedCharPattern="\d" maxLength="12"
                        pattern="^\d{12}$"/>
             <entityComboBox id="clazzField" property="clazz" itemsContainer="clazzesDc">
                 <actions>

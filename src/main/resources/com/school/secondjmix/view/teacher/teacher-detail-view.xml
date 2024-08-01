@@ -30,7 +30,7 @@
         <formLayout id="form" dataContainer="teacherDc">
             <textField id="nameField" property="name"/>
             <datePicker id="dateOfBirthField" property="dateOfBirth"/>
-            <textField id="phoneNumberField" property="phoneNumber" allowedCharPattern="^\d$" maxLength="10"
+            <textField id="phoneNumberField" property="phoneNumber" allowedCharPattern="\d" maxLength="10"
                        pattern="^\d{10}$"/>
             <textField id="addressField" property="address"/>
             <entityComboBox id="accountField" itemsContainer="usersDc" property="account">
