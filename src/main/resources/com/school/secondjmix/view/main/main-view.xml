@@ -37,9 +37,10 @@
             </section>
         </drawerLayout>
         <initialLayout>
-            <div>
-                <h1 text="msg://com.school.secondjmix.view.base/baseView.title"/>
-            </div>
+            <hbox padding="true" margin="true">
+                <icon icon="ACADEMY_CAP" alignSelf="CENTER"/>
+                <h2 text="msg://com.school.secondjmix.view.base/baseView.title" alignSelf="CENTER"/>
+            </hbox>
         </initialLayout>
     </appLayout>
 </mainView>
