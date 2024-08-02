@@ -12,8 +12,10 @@
                     </property>
                     <property name="name"/>
                 </property>
+                <property name="registeredSubjects" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="studentDl"/>
+            <collection id="registeredSubjectsDc" property="registeredSubjects"/>
         </instance>
         <collection id="clazzesDc" class="com.school.secondjmix.entity.Clazz">
             <loader id="clazzesDl" readOnly="true">
@@ -46,6 +48,20 @@
                 </actions>
             </entityComboBox>
         </formLayout>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="addSubjectButton" icon="lumo:plus" text="msg://addSubjectButton.title" themeNames="success"/>
+            <button id="removeSubjectButton" icon="lumo:minus" text="msg://removeSubjectButton.text"
+                    themeNames="error" enabled="false"/>
+        </hbox>
+        <dataGrid id="registeredSubjectsDataGrid" dataContainer="registeredSubjectsDc" width="100%" height="100%">
+            <actions>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="subject.name"/>
+                <column property="subject.code"/>
+            </columns>
+        </dataGrid>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>

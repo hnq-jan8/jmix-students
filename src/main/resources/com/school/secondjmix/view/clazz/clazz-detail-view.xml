@@ -16,7 +16,9 @@
                     <![CDATA[select e from School e]]>
                 </query>
             </loader>
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="subjects" fetchPlan="_base"/>
+            </fetchPlan>
         </collection>
         <collection id="studentsDc" class="com.school.secondjmix.entity.Student">
             <loader id="studentsDl" readOnly="true">

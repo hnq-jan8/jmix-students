@@ -2,7 +2,11 @@ package com.school.secondjmix.security;
 
 import com.school.secondjmix.entity.Clazz;
 import com.school.secondjmix.entity.School;
+import com.school.secondjmix.entity.SchoolSubject;
 import com.school.secondjmix.entity.Student;
+import com.school.secondjmix.entity.StudentSearch;
+import com.school.secondjmix.entity.Subject;
+import com.school.secondjmix.entity.SubjectStudent;
 import com.school.secondjmix.entity.Teacher;
 import io.jmix.security.model.EntityAttributePolicyAction;
 import io.jmix.security.model.EntityPolicyAction;
@@ -16,8 +20,8 @@ import io.jmix.securityflowui.role.annotation.ViewPolicy;
 public interface SchoolRole {
     String CODE = "school";
 
-    @MenuPolicy(menuIds = {"Clazz.list", "Student.list", "Teacher.list"})
-    @ViewPolicy(viewIds = {"Clazz.list", "Student.list", "Teacher.list", "Student.detail", "Teacher.detail", "Clazz.detail", "School.detail"})
+    @MenuPolicy(menuIds = {"Clazz.list", "Student.list", "Teacher.list", "Subject.list"})
+    @ViewPolicy(viewIds = {"Clazz.list", "Student.list", "Teacher.list", "Student.detail", "Teacher.detail", "Clazz.detail", "School.detail", "Subject.detail", "Subject.list"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Student.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
@@ -35,4 +39,20 @@ public interface SchoolRole {
     @EntityAttributePolicy(entityClass = Clazz.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Clazz.class, actions = EntityPolicyAction.ALL)
     void clazz();
+
+    @EntityAttributePolicy(entityClass = StudentSearch.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = StudentSearch.class, actions = EntityPolicyAction.ALL)
+    void studentSearch();
+
+    @EntityAttributePolicy(entityClass = Subject.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Subject.class, actions = EntityPolicyAction.ALL)
+    void subject();
+
+    @EntityAttributePolicy(entityClass = SubjectStudent.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = SubjectStudent.class, actions = EntityPolicyAction.ALL)
+    void subjectStudent();
+
+    @EntityAttributePolicy(entityClass = SchoolSubject.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = SchoolSubject.class, actions = EntityPolicyAction.ALL)
+    void schoolSubject();
 }

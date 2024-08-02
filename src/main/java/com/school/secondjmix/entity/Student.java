@@ -1,6 +1,7 @@
 package com.school.secondjmix.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.Column;
@@ -10,11 +11,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -57,6 +60,18 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Clazz clazz;
 
+    @Composition
+    @OneToMany(mappedBy = "student")
+    private List<SubjectStudent> registeredSubjects;
+
+    public List<SubjectStudent> getRegisteredSubjects() {
+        return registeredSubjects;
+    }
+
+    public void setRegisteredSubjects(List<SubjectStudent> registeredSubjects) {
+        this.registeredSubjects = registeredSubjects;
+    }
+
     public Clazz getClazz() {
         return clazz;
     }
@@ -65,12 +80,12 @@ public class Student {
         this.clazz = clazz;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getCitizenId() {

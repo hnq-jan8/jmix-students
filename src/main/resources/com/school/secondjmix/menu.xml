@@ -7,6 +7,7 @@
         <item view="Teacher.list" title="msg://com.school.secondjmix.view.teacher/teacherListView.title"/>
         <item view="Clazz.list" title="msg://com.school.secondjmix.view.clazz/clazzListView.title"/>
         <item view="Student.list" title="msg://com.school.secondjmix.view.student/studentListView.title"/>
+        <item view="Subject.list" title="msg://com.school.secondjmix.view.subject/subjectListView.title"/>
     </menu>
 
 </menu-config>

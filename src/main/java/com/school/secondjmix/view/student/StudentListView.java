@@ -101,7 +101,7 @@ public class StudentListView extends StandardListView<Student> {
         String query = "select e from Student e";
 
         if (nameField.getValue() != null) {
-            query += " where e.name like concat('%', :name, '%')";
+            query += " where lower(e.name) like concat('%', lower(:name), '%')";
             studentsDl.setParameter("name", nameField.getValue());
         }
         if (dateOfBirthField.getValue() != null) {
@@ -113,7 +113,7 @@ public class StudentListView extends StandardListView<Student> {
             studentsDl.setParameter("phoneNumber", phoneNumberField.getValue());
         }
         if (addressField.getValue() != null) {
-            query += " and e.address like concat('%', :address, '%')";
+            query += " and lower(e.address) like concat('%', lower(:address), '%')";
             studentsDl.setParameter("address", addressField.getValue());
         }
         if (citizenIdField.getValue() != null) {
