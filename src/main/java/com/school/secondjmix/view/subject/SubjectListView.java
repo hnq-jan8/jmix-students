@@ -50,9 +50,7 @@ public class SubjectListView extends StandardListView<Subject> {
 
     @Subscribe(id = "subjectsDc", target = Target.DATA_CONTAINER)
     public void onSubjectsDcItemChange(final InstanceContainer.ItemChangeEvent<Subject> event) {
-        if (cusRemoveBtn.isVisible()) {
-            cusRemoveBtn.setEnabled(event.getItem() != null);
-        }
+        cusRemoveBtn.setEnabled(event.getItem() != null);
     }
 
     @Subscribe(id = "cusRemoveBtn", subject = "clickListener")
@@ -87,11 +85,10 @@ public class SubjectListView extends StandardListView<Subject> {
 
     public void setSchool(School school) {
         if (school != null) {
-            subjectsDl.setQuery("""
-                            select s from SchoolSubject ss
-                            join ss.subject s
-                            where ss.school = :school
-                    """);
+            String query = subjectsDl.getQuery() + " where e in "
+                    + "(select s from SchoolSubject ss join ss.subject s where ss.school = :school)";
+
+            subjectsDl.setQuery(query);
             subjectsDl.setParameter("school", school);
 
             subjectsDl.load();

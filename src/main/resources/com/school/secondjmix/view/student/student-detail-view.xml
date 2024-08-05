@@ -49,7 +49,8 @@
             </entityComboBox>
         </formLayout>
         <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button id="addSubjectButton" icon="lumo:plus" text="msg://addSubjectButton.title" themeNames="success"/>
+            <button id="addSubjectButton" icon="lumo:plus" text="msg://addSubjectButton.title"
+                    themeNames="success"/>
             <button id="removeSubjectButton" icon="lumo:minus" text="msg://removeSubjectButton.text"
                     themeNames="error" enabled="false"/>
         </hbox>
@@ -58,8 +59,13 @@
                 <action id="remove" type="list_remove"/>
             </actions>
             <columns>
-                <column property="subject.name"/>
-                <column property="subject.code"/>
+                <column property="subject.name" flexGrow="2"/>
+                <column property="subject.code" flexGrow="2"/>
+                <column property="duration" editable="true" flexGrow="1"/>
+                <editorActionsColumn flexGrow="0" width="8em">
+                    <editButton/>
+                    <closeButton icon="vaadin:check"/>
+                </editorActionsColumn>
             </columns>
         </dataGrid>
         <hbox id="detailActions">

@@ -5,11 +5,13 @@ import com.school.secondjmix.entity.SchoolSubject;
 import com.school.secondjmix.entity.Subject;
 import com.school.secondjmix.view.main.MainView;
 import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 import io.jmix.core.DataManager;
 import io.jmix.flowui.DialogWindows;
 import io.jmix.flowui.Dialogs;
 import io.jmix.flowui.action.DialogAction;
+import io.jmix.flowui.component.grid.DataGrid;
 import io.jmix.flowui.kit.action.ActionVariant;
 import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.model.CollectionPropertyContainer;
@@ -32,6 +34,7 @@ import java.util.List;
 @ViewDescriptor("school-detail-view.xml")
 @EditedEntityContainer("schoolDc")
 public class SchoolDetailView extends StandardDetailView<School> {
+    private final List<SchoolSubject> initSubjects = new ArrayList<>();
     private final List<SchoolSubject> removedSubjects = new ArrayList<>();
 
     @Autowired
@@ -45,7 +48,22 @@ public class SchoolDetailView extends StandardDetailView<School> {
     private CollectionPropertyContainer<SchoolSubject> subjectsDc;
     @ViewComponent
     private JmixButton removeSubjectButton;
+    @ViewComponent
+    private HorizontalLayout buttonsPanel;
+    @ViewComponent
+    private DataGrid<SchoolSubject> subjectsDataGrid;
 
+
+    @Subscribe
+    public void onReady(final ReadyEvent event) {
+        initSubjects.addAll(getEditedEntity().getSubjects());
+    }
+
+    @Subscribe
+    public void onInitEntity(final InitEntityEvent<School> event) {
+        buttonsPanel.setVisible(false);
+        subjectsDataGrid.setVisible(false);
+    }
 
     @Subscribe(id = "addSubjectButton", subject = "clickListener")
     public void onAddSubjectButtonClick(final ClickEvent<JmixButton> event) {
@@ -63,7 +81,6 @@ public class SchoolDetailView extends StandardDetailView<School> {
                         newSubject.setSubject(selected);
 
                         subjectsDc.getMutableItems().add(newSubject);
-                        removedSubjects.removeIf(s -> s.getSubject().equals(selected));
                     }
                 })
                 .open();
@@ -80,8 +97,12 @@ public class SchoolDetailView extends StandardDetailView<School> {
                 .withHeader("Remove subject")
                 .withText("Are you sure you want to remove the subject?")
                 .withActions(new DialogAction(DialogAction.Type.YES).withHandler(actionPerformedEvent -> {
-                            removedSubjects.add(subjectsDc.getItem());
-                            subjectsDc.getMutableItems().remove(subjectsDc.getItem());
+                            SchoolSubject subject = subjectsDc.getItem();
+                            if (initSubjects.contains(subject)) {
+                                removedSubjects.add(subject);
+                            }
+
+                            subjectsDc.getMutableItems().remove(subject);
                         }),
                         new DialogAction(DialogAction.Type.NO).withVariant(ActionVariant.PRIMARY)
                 ).open();

@@ -44,6 +44,17 @@ public class SubjectStudent {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Student student;
 
+    @Column(name = "DURATION")
+    private Integer duration;
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
     public Student getStudent() {
         return student;
     }

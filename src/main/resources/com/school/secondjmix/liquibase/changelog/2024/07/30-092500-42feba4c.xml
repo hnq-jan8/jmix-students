@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="second-jmix">
+        <addColumn tableName="TEACHER">
+            <column name="ACCOUNT_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="second-jmix">
+        <addColumn tableName="SCHOOL">
+            <column name="MANAGER_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3" author="second-jmix">
+        <addColumn tableName="CLASS">
+            <column name="SCHOOL_ID" type="UUID"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="SCHOOL_ID" tableName="CLASS"/>
+    </changeSet>
+    <changeSet id="4" author="second-jmix">
+        <createIndex indexName="IDX_CLASS_SCHOOL" tableName="CLASS">
+            <column name="SCHOOL_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SCHOOL_ID" baseTableName="CLASS" constraintName="FK_CLASS_ON_SCHOOL"
+                                 referencedColumnNames="ID" referencedTableName="SCHOOL"/>
+    </changeSet>
+    <changeSet id="5" author="second-jmix">
+        <createIndex indexName="IDX_SCHOOL_MANAGER" tableName="SCHOOL">
+            <column name="MANAGER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="MANAGER_ID" baseTableName="SCHOOL"
+                                 constraintName="FK_SCHOOL_ON_MANAGER" referencedColumnNames="ID"
+                                 referencedTableName="USER_"/>
+    </changeSet>
+    <changeSet id="6" author="second-jmix">
+        <createIndex indexName="IDX_STUDENT_CCCD" tableName="STUDENT" unique="true">
+            <column name="CITIZEN_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="7" author="second-jmix">
+        <createIndex indexName="IDX_TEACHER_ACCOUNT" tableName="TEACHER">
+            <column name="ACCOUNT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TEACHER"
+                                 constraintName="FK_TEACHER_ON_ACCOUNT" referencedColumnNames="ID"
+                                 referencedTableName="USER_"/>
+    </changeSet>
+    <changeSet id="8" author="second-jmix">
+        <modifyDataType columnName="CITIZEN_ID" newDataType="VARCHAR(255)" tableName="STUDENT"/>
+    </changeSet>
+    <changeSet id="9" author="second-jmix">
+        <addNotNullConstraint columnDataType="UUID" columnName="CLASS_ID" tableName="STUDENT" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

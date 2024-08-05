@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="second-jmix">
+        <dropForeignKeyConstraint baseTableName="SCHOOL_SUBJECT" constraintName="FK_SCHOOL_SUBJECT_ON_SCHOOL"/>
+    </changeSet>
+    <changeSet id="2" author="second-jmix">
+        <dropForeignKeyConstraint baseTableName="SUBJECT_STUDENT" constraintName="FK_SUBJECT_STUDENT_ON_STUDENT"/>
+    </changeSet>
+    <changeSet id="3" author="second-jmix">
+        <addForeignKeyConstraint baseColumnNames="SCHOOL_ID" baseTableName="SCHOOL_SUBJECT"
+                                 constraintName="FK_SCHOOL_SUBJECT_ON_SCHOOL" onDelete="CASCADE"
+                                 referencedColumnNames="ID" referencedTableName="SCHOOL"/>
+    </changeSet>
+    <changeSet id="4" author="second-jmix">
+        <addForeignKeyConstraint baseColumnNames="STUDENT_ID" baseTableName="SUBJECT_STUDENT"
+                                 constraintName="FK_SUBJECT_STUDENT_ON_STUDENT" onDelete="CASCADE"
+                                 referencedColumnNames="ID" referencedTableName="STUDENT"/>
+    </changeSet>
+</databaseChangeLog>

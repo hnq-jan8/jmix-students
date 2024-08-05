@@ -32,7 +32,6 @@
         <hbox id="buttonsPanel" classNames="buttons-panel">
             <button id="createBtn" action="subjectsDataGrid.create"/>
             <button id="editBtn" action="subjectsDataGrid.edit"/>
-            <button id="removeBtn" action="subjectsDataGrid.remove"/>
             <button id="cusRemoveBtn" text="msg://cusRemoveBtn.text" icon="vaadin:trash" themeNames="error"
                     enabled="false"/>
             <simplePagination id="pagination" dataLoader="subjectsDl"/>

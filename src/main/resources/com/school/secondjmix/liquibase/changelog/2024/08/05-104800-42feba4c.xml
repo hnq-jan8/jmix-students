@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1" author="second-jmix">
-        <dropNotNullConstraint columnDataType="uuid" columnName="TEACHER_ID" tableName="CLASS"/>
+        <addColumn tableName="SUBJECT_STUDENT">
+            <column name="DURATION" type="INT"/>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>
