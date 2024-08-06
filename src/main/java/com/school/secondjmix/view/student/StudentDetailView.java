@@ -2,7 +2,6 @@ package com.school.secondjmix.view.student;
 
 import com.school.secondjmix.entity.Clazz;
 import com.school.secondjmix.entity.School;
-import com.school.secondjmix.entity.SchoolSubject;
 import com.school.secondjmix.entity.Student;
 import com.school.secondjmix.entity.Subject;
 import com.school.secondjmix.entity.SubjectStudent;
@@ -47,6 +46,7 @@ public class StudentDetailView extends StandardDetailView<Student> {
     private final List<UUID> initSubjects = new ArrayList<>();
     private final List<UUID> removedSubjects = new ArrayList<>();
     private boolean isSingleSchool = false;
+    private boolean isCreate = false;
 
     @Autowired
     private DataManager dataManager;
@@ -80,10 +80,12 @@ public class StudentDetailView extends StandardDetailView<Student> {
         addSubjectButton.setEnabled(false);
         buttonsPanel.setVisible(false);
         registeredSubjectsDataGrid.setVisible(false);
+        isCreate = true;
     }
 
     @Subscribe
     public void onReady(final ReadyEvent event) {
+        if (isCreate) return;
         initSubjects.addAll(getEditedEntity().getRegisteredSubjects().stream()
                 .map(SubjectStudent::getId)
                 .toList());
@@ -115,6 +117,9 @@ public class StudentDetailView extends StandardDetailView<Student> {
         if (!isSingleSchool) {
             subjectListView.setSchool(getEditedEntity().getClazz().getSchool());
         }
+        if (getEditedEntity().getBlock() != null) {
+            subjectListView.setBlock(getEditedEntity().getBlock());
+        }
 
         dialogWindow.open();
     }
@@ -130,7 +135,7 @@ public class StudentDetailView extends StandardDetailView<Student> {
     }
 
     @Subscribe(id = "registeredSubjectsDc", target = Target.DATA_CONTAINER)
-    public void onRegisteredSubjectsDcItemChange(final InstanceContainer.ItemChangeEvent<SchoolSubject> event) {
+    public void onRegisteredSubjectsDcItemChange(final InstanceContainer.ItemChangeEvent<SubjectStudent> event) {
         removeSubjectButton.setEnabled(event.getItem() != null);
     }
 

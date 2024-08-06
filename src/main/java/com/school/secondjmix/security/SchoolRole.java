@@ -4,7 +4,6 @@ import com.school.secondjmix.entity.Clazz;
 import com.school.secondjmix.entity.School;
 import com.school.secondjmix.entity.SchoolSubject;
 import com.school.secondjmix.entity.Student;
-import com.school.secondjmix.entity.StudentSearch;
 import com.school.secondjmix.entity.Subject;
 import com.school.secondjmix.entity.SubjectStudent;
 import com.school.secondjmix.entity.Teacher;
@@ -39,10 +38,6 @@ public interface SchoolRole {
     @EntityAttributePolicy(entityClass = Clazz.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Clazz.class, actions = EntityPolicyAction.ALL)
     void clazz();
-
-    @EntityAttributePolicy(entityClass = StudentSearch.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
-    @EntityPolicy(entityClass = StudentSearch.class, actions = EntityPolicyAction.ALL)
-    void studentSearch();
 
     @EntityAttributePolicy(entityClass = Subject.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Subject.class, actions = EntityPolicyAction.ALL)

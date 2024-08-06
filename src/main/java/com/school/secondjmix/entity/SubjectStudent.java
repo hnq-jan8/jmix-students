@@ -33,6 +33,7 @@ public class SubjectStudent {
     @Version
     private Integer version;
 
+    @OnDeleteInverse(DeletePolicy.DENY)
     @NotNull
     @JoinColumn(name = "SUBJECT_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

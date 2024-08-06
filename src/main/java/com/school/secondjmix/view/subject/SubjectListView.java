@@ -1,5 +1,6 @@
 package com.school.secondjmix.view.subject;
 
+import com.school.secondjmix.entity.Block;
 import com.school.secondjmix.entity.School;
 import com.school.secondjmix.entity.SchoolSubject;
 import com.school.secondjmix.entity.Subject;
@@ -85,11 +86,25 @@ public class SubjectListView extends StandardListView<Subject> {
 
     public void setSchool(School school) {
         if (school != null) {
-            String query = subjectsDl.getQuery() + " where e in "
-                    + "(select s from SchoolSubject ss join ss.subject s where ss.school = :school)";
+            String initQuery = subjectsDl.getQuery();
+            String query = initQuery + (initQuery.contains("where e in") ? " and " : " where ")
+                    + "e in (select s from SchoolSubject ss join ss.subject s where ss.school = :school)";
 
             subjectsDl.setQuery(query);
             subjectsDl.setParameter("school", school);
+
+            subjectsDl.load();
+        }
+    }
+
+    public void setBlock(Block block) {
+        if (block != null) {
+            String initQuery = subjectsDl.getQuery();
+            String query = initQuery + (initQuery.contains("where e in") ? " and " : " where e in ")
+                    + "e in (select s from BlockSubject bs join bs.subject s where bs.block = :block)";
+
+            subjectsDl.setQuery(query);
+            subjectsDl.setParameter("block", block);
 
             subjectsDl.load();
         }

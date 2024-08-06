@@ -39,6 +39,7 @@ public class SchoolSubject {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private School school;
 
+    @OnDeleteInverse(DeletePolicy.DENY)
     @JoinColumn(name = "SUBJECT_ID", nullable = false)
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

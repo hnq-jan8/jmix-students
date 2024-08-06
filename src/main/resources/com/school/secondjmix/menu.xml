@@ -3,11 +3,18 @@
 
     <menu id="application" title="msg://com.school.secondjmix/menu.application.title" opened="true">
         <item view="User.list" title="msg://com.school.secondjmix.view.user/UserListView.title"/>
+    </menu>
+
+    <menu id="school" title="msg://com.school.secondjmix/menu.school.title" opened="true">
         <item view="School.list" title="msg://com.school.secondjmix.view.school/schoolListView.title"/>
-        <item view="Teacher.list" title="msg://com.school.secondjmix.view.teacher/teacherListView.title"/>
         <item view="Clazz.list" title="msg://com.school.secondjmix.view.clazz/clazzListView.title"/>
-        <item view="Student.list" title="msg://com.school.secondjmix.view.student/studentListView.title"/>
+        <item view="Block.list" title="msg://com.school.secondjmix.view.block/blockListView.title"/>
         <item view="Subject.list" title="msg://com.school.secondjmix.view.subject/subjectListView.title"/>
+    </menu>
+
+    <menu id="people" title="msg://com.school.secondjmix/menu.people.title" opened="true">
+        <item view="Teacher.list" title="msg://com.school.secondjmix.view.teacher/teacherListView.title"/>
+        <item view="Student.list" title="msg://com.school.secondjmix.view.student/studentListView.title"/>
     </menu>
 
 </menu-config>

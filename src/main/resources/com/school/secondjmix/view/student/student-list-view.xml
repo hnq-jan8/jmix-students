@@ -13,6 +13,7 @@
                     </property>
                     <property name="name"/>
                 </property>
+                <property name="block" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="studentsDl" readOnly="true">
                 <query>
@@ -28,10 +29,14 @@
             </loader>
             <fetchPlan extends="_base"/>
         </collection>
-        <instance id="studentSearchDc" class="com.school.secondjmix.entity.StudentSearch">
-            <fetchPlan/>
-            <loader id="studentSearchDl"/>
-        </instance>
+        <collection id="blocksDc" class="com.school.secondjmix.entity.Block">
+            <loader id="blocksDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Block e]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -44,32 +49,42 @@
         <action id="discardAction" type="lookup_discard"/>
     </actions>
     <layout>
-        <vbox>
-            <details summaryText="Search" opened="true">
-                <formLayout id="searchForm" dataContainer="studentSearchDc">
-                    <responsiveSteps>
-                        <responsiveStep minWidth="0" columns="1"/>
-                        <responsiveStep minWidth="25em" columns="2"/>
-                        <responsiveStep minWidth="50em" columns="3"/>
-                    </responsiveSteps>
-                    <textField id="nameField" property="name" clearButtonVisible="true"/>
-                    <datePicker id="dateOfBirthField" property="dateOfBirth" clearButtonVisible="true"/>
-                    <textField id="phoneNumberField" property="phoneNumber" allowedCharPattern="\d" maxLength="10"/>
-                    <textField id="addressField" property="address" clearButtonVisible="true"/>
-                    <textField id="citizenIdField" property="citizenId" allowedCharPattern="\d" maxLength="12"/>
-                    <entityComboBox id="clazzField" property="clazz" itemsContainer="clazzesDc">
-                        <actions>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityComboBox>
-                </formLayout>
-                <div height="12px"/>
-                <hbox id="searchButtons" justifyContent="END">
-                    <button id="clearButton" text="Clear" icon="lumo:cross"/>
-                    <button id="searchButton" text="Search" icon="lumo:search"/>
-                </hbox>
-            </details>
-        </vbox>
+        <details id="studentSearchPanel" summaryText="Search" opened="true" themeNames="filled" width="100%">
+            <formLayout id="studentSearchForm">
+                <responsiveSteps>
+                    <responsiveStep minWidth="0" columns="1"/>
+                    <responsiveStep minWidth="20em" columns="2"/>
+                    <responsiveStep minWidth="45em" columns="3"/>
+                    <responsiveStep minWidth="64em" columns="4"/>
+                </responsiveSteps>
+                <textField id="nameField" clearButtonVisible="true" required="false"
+                           label="msg://nameField.title"/>
+                <datePicker id="dateOfBirthField" clearButtonVisible="true"
+                            required="false" label="msg://dateOfBirthField.label"/>
+                <textField id="phoneNumberField" allowedCharPattern="\d" maxLength="10"
+                           label="msg://phoneNumberField.label"/>
+                <textField id="addressField" clearButtonVisible="true" label="msg://addressField.label"/>
+                <textField id="citizenIdField" allowedCharPattern="\d" maxLength="12"
+                           required="false" label="msg://citizenIdField.label"/>
+                <entityComboBox id="clazzField" itemsContainer="clazzesDc" required="false" metaClass="Clazz"
+                                label="msg://clazzField.label">
+                    <actions>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityComboBox>
+                <entityComboBox id="blockField" itemsContainer="blocksDc" metaClass="Block"
+                                label="msg://blockField.label">
+                    <actions>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityComboBox>
+            </formLayout>
+            <div height="12px"/>
+            <hbox id="searchButtons" justifyContent="END">
+                <button id="clearButton" text="Clear" icon="lumo:cross"/>
+                <button id="searchButton" text="Search" icon="lumo:search"/>
+            </hbox>
+        </details>
         <hbox id="buttonsPanel" classNames="buttons-panel">
             <button id="createBtn" action="studentsDataGrid.create"/>
             <button id="editBtn" action="studentsDataGrid.edit"/>
@@ -93,6 +108,7 @@
                 <column property="address"/>
                 <column property="citizenId"/>
                 <column property="clazz"/>
+                <column property="block"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">

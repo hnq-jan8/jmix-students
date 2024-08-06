@@ -23,7 +23,8 @@ import java.util.UUID;
 @JmixEntity
 @Table(name = "STUDENT", indexes = {
         @Index(name = "IDX_STUDENT_CLAZZ", columnList = "CLASS_ID"),
-        @Index(name = "IDX_STUDENT_CCCD", columnList = "CITIZEN_ID", unique = true)
+        @Index(name = "IDX_STUDENT_CCCD", columnList = "CITIZEN_ID", unique = true),
+        @Index(name = "IDX_STUDENT_BLOCK", columnList = "BLOCK_ID")
 })
 @Entity
 public class Student {
@@ -60,9 +61,21 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Clazz clazz;
 
+    @JoinColumn(name = "BLOCK_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Block block;
+
     @Composition
     @OneToMany(mappedBy = "student")
     private List<SubjectStudent> registeredSubjects;
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
+    }
 
     public List<SubjectStudent> getRegisteredSubjects() {
         return registeredSubjects;

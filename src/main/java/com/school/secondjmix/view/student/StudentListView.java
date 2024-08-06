@@ -1,5 +1,6 @@
 package com.school.secondjmix.view.student;
 
+import com.school.secondjmix.entity.Block;
 import com.school.secondjmix.entity.Clazz;
 import com.school.secondjmix.entity.Student;
 import com.school.secondjmix.view.main.MainView;
@@ -46,6 +47,8 @@ public class StudentListView extends StandardListView<Student> {
     private TypedTextField<String> citizenIdField;
     @ViewComponent
     private EntityComboBox<Clazz> clazzField;
+    @ViewComponent
+    private EntityComboBox<Block> blockField;
 
     @Subscribe(id = "searchButton", subject = "clickListener")
     public void onSearchButtonClick(final ClickEvent<JmixButton> event) {
@@ -95,6 +98,11 @@ public class StudentListView extends StandardListView<Student> {
         search();
     }
 
+    @Subscribe("blockField")
+    public void onBlockFieldComponentValueChange(final AbstractField.ComponentValueChangeEvent<EntityComboBox<Block>, Block> event) {
+        search();
+    }
+
 
     private void search() {
         removeAllParams();
@@ -124,6 +132,10 @@ public class StudentListView extends StandardListView<Student> {
             query += " and e.clazz.id = :clazzId";
             studentsDl.setParameter("clazzId", clazzField.getValue().getId());
         }
+        if (blockField.getValue() != null) {
+            query += " and e.block.id = :blockId";
+            studentsDl.setParameter("blockId", blockField.getValue().getId());
+        }
 
         studentsDl.setQuery(query);
         studentsDl.load();
@@ -136,6 +148,7 @@ public class StudentListView extends StandardListView<Student> {
         studentsDl.removeParameter("address");
         studentsDl.removeParameter("citizenId");
         studentsDl.removeParameter("clazzId");
+        studentsDl.removeParameter("blockId");
     }
 
     private void handleEnterKeyDown(KeyDownEvent event) {

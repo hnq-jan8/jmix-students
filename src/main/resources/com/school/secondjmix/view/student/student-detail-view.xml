@@ -13,6 +13,7 @@
                     <property name="name"/>
                 </property>
                 <property name="registeredSubjects" fetchPlan="_base"/>
+                <property name="block" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="studentDl"/>
             <collection id="registeredSubjectsDc" property="registeredSubjects"/>
@@ -21,6 +22,14 @@
             <loader id="clazzesDl" readOnly="true">
                 <query>
                     <![CDATA[select e from Clazz e order by e.school.name asc, e.name asc]]>
+                </query>
+            </loader>
+            <fetchPlan extends="_base"/>
+        </collection>
+        <collection id="blocksDc" class="com.school.secondjmix.entity.Block">
+            <loader id="blocksDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Block e]]>
                 </query>
             </loader>
             <fetchPlan extends="_base"/>
@@ -45,6 +54,12 @@
             <entityComboBox id="clazzField" property="clazz" itemsContainer="clazzesDc">
                 <actions>
                     <action id="entityLookup" type="entity_lookup"/>
+                </actions>
+            </entityComboBox>
+            <entityComboBox id="blockField" property="block" itemsContainer="blocksDc">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
                 </actions>
             </entityComboBox>
         </formLayout>
