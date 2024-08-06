@@ -14,6 +14,7 @@ import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 import io.jmix.core.DataManager;
+import io.jmix.core.Id;
 import io.jmix.flowui.DialogWindows;
 import io.jmix.flowui.Dialogs;
 import io.jmix.flowui.action.DialogAction;
@@ -44,7 +45,7 @@ import java.util.UUID;
 @EditedEntityContainer("studentDc")
 public class StudentDetailView extends StandardDetailView<Student> {
     private final List<UUID> initSubjects = new ArrayList<>();
-    private final List<SubjectStudent> removedSubjects = new ArrayList<>();
+    private final List<UUID> removedSubjects = new ArrayList<>();
     private boolean isSingleSchool = false;
 
     @Autowired
@@ -141,20 +142,18 @@ public class StudentDetailView extends StandardDetailView<Student> {
                 .withActions(
                         new DialogAction(DialogAction.Type.YES).withHandler(actionPerformedEvent -> {
                             SubjectStudent targetItem = registeredSubjectsDc.getItem();
+                            registeredSubjectsDc.getMutableItems().remove(targetItem);
 
                             if (initSubjects.contains(targetItem.getId())) {
-                                removedSubjects.add(targetItem);
+                                removedSubjects.add(targetItem.getId());
                             }
-
-                            registeredSubjectsDc.getMutableItems().remove(targetItem);
                         }),
                         new DialogAction(DialogAction.Type.NO).withVariant(ActionVariant.PRIMARY)
                 ).open();
     }
 
     @Subscribe(target = Target.DATA_CONTEXT)
-    public void onPreSave(final DataContext.PreSaveEvent event) {
-        // TODO: fix optimistic lock popup when delete after change DURATION
-        removedSubjects.forEach(dataManager::remove);
+    public void onPostSave(final DataContext.PostSaveEvent event) {
+        removedSubjects.forEach(id -> dataManager.remove(Id.of(id, SubjectStudent.class)));
     }
 }

@@ -109,7 +109,7 @@ public class SchoolDetailView extends StandardDetailView<School> {
     }
 
     @Subscribe(target = Target.DATA_CONTEXT)
-    public void onPreSave(final DataContext.PreSaveEvent event) {
+    public void onPostSave(final DataContext.PostSaveEvent event) {
         removedSubjects.forEach(dataManager::remove);
     }
 }
